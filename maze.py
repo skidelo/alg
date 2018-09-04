@@ -11,6 +11,7 @@ class Box(object):
             "west": False
         }
         self._marked = False
+        self._blocked = False
 
     def open_side(self, side):
         self.openings[side] = True
@@ -24,9 +25,19 @@ class Box(object):
     def unmark(self):
         self._marked = False
 
+    def block(self):
+        self._blocked = True
+
+    def unblock(self):
+        self._blocked = False
+
     @property
     def marked(self):
         return self._marked
+
+    @property
+    def blocked(self):
+        return self._blocked
 
 
 def print_boxes(boxes):
@@ -216,18 +227,19 @@ def solve_maze(boxes, entry_edge_index):
         boxes[r][c].mark()
     return solution
 
-NUM_ROWS = 10
-NUM_COLUMNS = 10
-boxes = [[Box() for _ in range(NUM_COLUMNS)] for _ in range(NUM_ROWS)]
-entry_edge_i, _ = make_maze(boxes)
-# print_boxes(boxes) # Prints maze before solving
-solution = solve_maze(boxes, entry_edge_i)
-print_boxes(boxes)
+if __name__ == '__main__':
+    NUM_ROWS = 25
+    NUM_COLUMNS = 25
+    boxes = [[Box() for _ in range(NUM_COLUMNS)] for _ in range(NUM_ROWS)]
+    entry_edge_i, _ = make_maze(boxes)
+    # print_boxes(boxes) # Prints maze before solving
+    solution = solve_maze(boxes, entry_edge_i)
+    print_boxes(boxes)
 
-# Calculate percentage of marked boxes (maze coverage)
-marked = 0
-for row in boxes:
-    for col in row:
-        if col.marked:
-            marked += 1
-print("Maze coverage: {0:g}%".format((float(marked)/(len(boxes)*len(boxes[0])))*100))
+    # Calculate percentage of marked boxes (maze coverage)
+    marked = 0
+    for row in boxes:
+        for col in row:
+            if col.marked:
+                marked += 1
+    print("Maze coverage: {0:g}%".format((float(marked)/(len(boxes)*len(boxes[0])))*100))
