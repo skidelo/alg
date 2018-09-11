@@ -1,3 +1,2 @@
-# Maze generator/solver
-### Just a proof of concept.
+# Fun with algorithms
 *Requires python3*
